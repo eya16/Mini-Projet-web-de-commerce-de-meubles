@@ -1,21 +1,21 @@
 <?php
-include "../core/ProduitC.php";
+include "../core/commandeC.php";
 require ('db.php');
 
 
 ob_start();
 ?>
 <page backtop="20mm">
-	 <h1> Tous les produits  </h1>
+	 <h1> Toutes les commandes </h1>
 		<table style="width:100%;border: 2px dashed " >
 		<tr>
 
-														  <th scope="col">id produit</th>
-													      <th scope="col">nom produit </th>
-													      <th scope="col">description </th>
+														  <th scope="col">idcommande</th>
+													      <th scope="col">date</th>
+													      <th scope="col">montantCommande</th>
+													      <th scope="col">etatcom</th>
+													      <th scope="col">lieu</th>
 													      <th scope="col">prix</th>
-													      <th scope="col">categorie</th>
-													      <th scope="col">quantite </th>
 													  
 													      
 													    
@@ -23,18 +23,18 @@ ob_start();
 													</tr>
 													
 		<?php
-	$produitss=new ProduitC();
-$listproduits=$produitss->recupererProduit();
-		foreach($listproduits as $row) {
+	$commandess=new commandeC();
+$listcommandes=$commandess->recuperercommandes();
+		foreach($listcommandes as $row) {
 			?>
 		  <tr>
-												      <td> <?php echo $row["idproduit"] ; ?></td> 
-												      <td> <?php echo $row["nomproduit"] ; ?></td> 
-												       <td> <?php echo $row["description"] ; ?></td> 
-												      <td> <?php echo $row["prix"] ; ?></td> 
-                                                     <td> <?php echo $row["qt"] ; ?></td> 
-													  <td> <?php echo $row["categorie"] ; ?></td>
-													   <td> <?php echo $row["image"] ; ?></td> 
+												      <td> <?php echo $row["idCommande"] ; ?></td> 
+												      <td> <?php echo $row["dateCommande"] ; ?></td> 
+												       <td> <?php echo $row["montantCommande"] ; ?></td> 
+												      <td> <?php echo $row["etatCommande"] ; ?></td> 
+                                                     <td> <?php echo $row["lieuLivraison"] ; ?></td> 
+													  <td> <?php echo $row["prixLivraison"] ; ?></td> 
+
 
  												      
 												   
