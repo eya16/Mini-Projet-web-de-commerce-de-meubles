@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Modifier Client</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Ajout Admin</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="style/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
@@ -30,78 +31,55 @@
 </head>
 <body>
 
-                 
 
 	<div class="container-contact100">
 		<div class="wrap-contact100">
-            <a href="Gestions%20des%20clients.php"> <input type="button" value="retour" style="float: left;width:85px;
+            <a href="login.html"> <input type="button" value="retour" style="float: left;width:85px;
 	height:85px;
 	background:#fafafa;
 	box-shadow:2px 2px 8px #aaa;
 	font:bold 13px Arial;
 	border-radius:50%;
 	color:#555;"> </a>
-            <?PHP
-include "../core/clientC.php";
-            include "../entities/client.php";
-
-            if (isset($_GET['nom'])){
-$client1C=new clientC();
-$liste=$client1C->afficher();
-                foreach($liste as $row){ 
-		$nom=$row['nom'];
-		$email=$row['email'];
-		$date=$row['datee'];
-		$etat=$row['etat'];
-        $adresse=$row['adresse'];
-
-?>
-			<form class="contact100-form validate-form" method="POST" >
+			<form class="contact100-form validate-form" method="POST" action="ajoutusers.php">
 				<span class="contact100-form-title">
-					Modifier Client 
+					Ajout Admin 
 				</span>
 
 				<div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
 					<span class="label-input100">Nom et prenom *</span>
-					<input class="input100" type="text" name="nom"  value="<?PHP echo $nom ?>">
+					<input class="input100" type="text" name="name" placeholder="Saisir  votre nom ">
 				</div>
 
 				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
 					<span class="label-input100">Email *</span>
-					<input class="input100" type="text" name="email"  value="<?PHP echo $email ?>">
+					<input class="input100" type="text" name="email" placeholder=" Saisir votre email ">
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Date </span>
-					<input class="input100" type="text" name="date"  value="<?PHP echo $date ?> ">
+					<span class="label-input100">num </span>
+					<input class="input100" type="text" name="phone" placeholder="Saisir votre num ">
 				</div>
 
                 	<div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
-					<span class="label-input100"> Etat </span>
-					  <input class="input100" type="text" name="etat"  value="<?PHP echo $etat ?>">
+					<span class="label-input100">Mot de passe*</span>
+					  <input class="input100" type="password" name="mdp" placeholder="mot de passe">
 				</div>
                 
                 <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" >
-					<span class="label-input100"> Adresse </span>
-				  <input class="input100" type="text" name="adresse"  value="<?PHP echo $adresse ?>">
+					<span class="label-input100">Confirmation mot de passe</span>
+				  <input class="input100" type="password" name="confmdp" placeholder="mot de passe">
 				</div>
 
 				<div class="container-contact100-form-btn">
-<input type="submit" name="modifier" value="modifier" class="contact100-form-btn" href="Gestions%20des%20clients.php">
-<input type="hidden" name="cin_ini" value="<?PHP echo $_GET['nom'];?>">
-					
-					
+					<button class="contact100-form-btn">
+						<span>
+							Connecter
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+					</button>
 				</div>
-			</form> 
-            <?PHP
-	}
-}
-if (isset($_POST['modifier'])){
-	$client1=new client($_POST['nom'],$_POST['email'],$_POST['etat'],$_POST['date'],$_POST['adresse']);
-	$client1C->modifier($client1,$_POST['cin_ini']);
-header('location: Gestions des clients.php');
-}
-?>
+			</form>
 		</div>
 	</div>
 

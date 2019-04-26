@@ -186,9 +186,7 @@ include 'User.php';
             </div>
         </aside>
         <!-- END MENU SIDEBAR-->
-
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
+          <div class="page-container">
             <!-- HEADER DESKTOP-->
             <header class="header-desktop">
                 <div class="section__content section__content--p30">
@@ -279,40 +277,13 @@ $u=$user->Logedin($conn,$_SESSION['l'],$_SESSION['p']);
                     </div></div> 
             </header>
             <!-- END HEADER DESKTOP-->
-
-            
-                                <!--  Data table-->
-                            <br><br><br><br>
-                      
- 
-<form action="client.html">                              
-  <button class="au-btn au-btn-icon au-btn--blue" name="statistiques" >Ajouter un client <img src="images/historique1.png"></button>
-</form>      
-            <br>
-
-<form  action="statistiques.php">
-       	                                          <button class="au-btn au-btn-icon au-btn--blue" name="statistiques" >STATISTIQUES DES COMMANDES <img src="images/poll.png"></button>
-		                        </form>
-								<br>
-								<form  action="historique.php">
-       	                                          <button class="au-btn au-btn-icon au-btn--blue" name="historiques">HISTORIQUE  DES  CLIENTS      <img src="images/h.png"> </button>
-		                        </form> <br>
-								<form  action="trieD.php">
-       	                                          <button class="au-btn au-btn-icon au-btn--blue" name="statistiques" >Trier les clients selon l'etat <img src="images/a.png"></button>
-		                        </form>
-								
-								<br>
-								<form  action="triec.php">
-       	                                          <button class="au-btn au-btn-icon au-btn--blue" name="statistiques" >Trier les clients selon adresse <img src="images/d.png"></button>
-		                        </form>
-								
-								
-								
-	
-	 <?PHP
+<br> <br> <br> 
+             <?PHP
 include "../core/clientC.php";
+            //  if (isset($_GET['nom']))
+            //   {
 $client1C=new clientC();
-$liste=$client1C->trieC();	
+$liste=$client1C->afficher();	
                 ?> 
 <table class="table table-bordered table-striped mb-none"  id="myTable2" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 							<thead>
@@ -323,8 +294,9 @@ $liste=$client1C->trieC();
 													<th style="color:rgb(44, 172, 171)">etat</th>
 													<th style="color:rgb(44, 172, 171)">Date</th>
 													<th style="color:rgb(44, 172, 171)">Adresse</th>
-													<th style="color:rgb(44, 172, 171)">Valider</th>
-													<th style="color:rgb(44, 172, 171)">PDF</th>
+				        							<th style="color:rgb(44, 172, 171)">Sexe</th>
+					        							<th style="color:rgb(44, 172, 171)">num</th>
+
 													
 												</tr>
 												 <?php foreach ($liste as $row)
@@ -342,44 +314,15 @@ $liste=$client1C->trieC();
                                         
                                         <td><?php echo $row["datee"] ; ?></td>
                                         <td><?php echo $row["adresse"] ; ?></td>
-                                                  
+                                        <td><?php echo $row["sexe"] ; ?></td>
+            
+                                        <td><?php echo $row["num"] ; ?></td>
 
-										  <td>
- 
-											  <form method="GET" action="validerclient.php">
-											        <button name="valider" onsubmit="test()"; ><img src="images/valider.png"></button>
-											        <input type="hidden" value="<?PHP echo $row['id']; ?>" name="id">
-											  </form> 	
-                                        </td>
 										
-											   <td>
-											     
-											        <form method="POST" action="pdf.php">
-       	                                        <button name="imprimer" ><img src="images/shredder.png"></button>
-		   
-                                                  </form>
-												  
-												  
-												  </td>
 											<td>   
 										  <div class="table-data-feature">
-        <button class="item" data-toggle="tooltip" data-placement="top" title="Supprimer">
-    <a href="supprimerClient.php?nom=<?PHP echo $row['nom']; ?>" class="zmdi zmdi-delete">
-    
-</a>
- </button>
-
- <button class="item" data-toggle="tooltip" data-placement="top" title="Editer">
-    <a href="modifierClient.php?nom=<?PHP echo $row['nom']; ?>" class="zmdi zmdi-edit">
-     
-</a>
- </button>
-
-  <button class="item" data-toggle="tooltip" data-placement="top" title="Detail">
-     
-      <a href="detail_client.php?nom=<?php echo $row['nom'];?> "  target="_blank" class="zmdi zmdi-eye"> 
-</a>
-                                                        </button> </div>  </td>	
+      
+                                                </div>  </td>	
             
 
 										  
@@ -389,7 +332,8 @@ $liste=$client1C->trieC();
     
 							   
 									
-                                    <?php } ?>
+                                    <?php } 
+                                ?>
 </thead>
 
 

@@ -1,17 +1,9 @@
-<?PHP
-include_once "../entities/produit.php";
-include_once "../core/produitC.php";
-include_once "../core/commandeC.php";
-include_once "../entities/commande.php";
+<?php
+// On démarre la session AVANT d'écrire du code HTML
 session_start();
-$_SESSION['id']=2;
-if(isset($_SESSION['id']))
-{
+include 'User.php';
 
-$commande1C=new commandeC();
-$commandes=$commande1C->recupererhistorique();
-
-?>
+?> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +25,7 @@ $commandes=$commande1C->recupererhistorique();
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Historique des commandes </title>
+    <title>gestion des commandes </title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all">
@@ -68,7 +60,9 @@ $commandes=$commande1C->recupererhistorique();
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <h1>wapi</h1>
+                        <a class="logo" href="index.html">
+                            <h1>Wapi</h1>
+                        </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
                                 <span class="hamburger-inner"></span>
@@ -122,7 +116,10 @@ $commandes=$commande1C->recupererhistorique();
                             <a href="map.html">
                                 <i class="fas fa-map-marker-alt"></i>Gestion des promotions</a>
                         </li>
-                        
+                         <li>
+                            <a href="map.html">
+                                <i class="fas fa-chart-bar"></i>Gestion des fornisseurs</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -133,7 +130,7 @@ $commandes=$commande1C->recupererhistorique();
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <h1>Wapi</h1>
+                  <h1>Wapi</h1>
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -160,6 +157,8 @@ $commandes=$commande1C->recupererhistorique();
                         <li>
                             <a href="Gcommande.php">
                                 <i class="fas fa-shopping-cart"></i>Gestions des commandes</a>
+                                
+
                         </li>
                         <li>
                             <a href="#">
@@ -177,16 +176,17 @@ $commandes=$commande1C->recupererhistorique();
                             <a href="map.html">
                                 <i class="fas fa-suitcase"></i>Gestions du service aprés vente</a>
                         </li>
-
+ <li>
+                            <a href="map.html">
+                                <i class="fas fa-group (alias)"></i>Gestions des fornisseurs</a>
+                        </li>
                         
                     </ul>
                 </nav>
             </div>
         </aside>
         <!-- END MENU SIDEBAR-->
-
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
+          <div class="page-container">
             <!-- HEADER DESKTOP-->
             <header class="header-desktop">
                 <div class="section__content section__content--p30">
@@ -215,20 +215,47 @@ $commandes=$commande1C->recupererhistorique();
                                            
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">Islem Ouslati</a>
+                                             <?PHP  
+                                                        if (isset($_SESSION['l']) && isset($_SESSION['p'])) 
+                                                        { 
+                                                            ?> 
+                                            <a class="js-acc-btn" href="#"> <?PHP echo $_SESSION['l'] ; ?> </a>
+                                                                <?PHP
+                                                        } 
+                                                        ?> 
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
-                                                <div class="image">
-                                                    <a href="#">
-                                                     
-                                                    </a>
-                                                </div>
+                                
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">Islem Ouslati</a>
+                                                         <?PHP  
+                                                        if (isset($_SESSION['l']) && isset($_SESSION['p'])) 
+                                                        { 
+                                                            ?> 
+                                                        <a href="#"><?PHP echo $_SESSION['l'] ; ?>  </a>   
+                                                        <?PHP
+                                                        } 
+                                                        ?> 
                                                     </h5>
-                                                    <span class="email"></span>
+                                                     <?PHP  
+                                                        if (isset($_SESSION['l']) && isset($_SESSION['p'])) 
+                                                        { 
+ $c=new Database();
+$conn=$c->connexion();
+$user=new User($_SESSION['l'],$_SESSION['p'],$conn);
+$u=$user->Logedin($conn,$_SESSION['l'],$_SESSION['p']); 
+                                                            foreach($u as $t){
+                                                                 
+	
+	
+	                                              $_SESSION['email']=$t['user_email'];
+                                                                ?>  
+                                                    <span class="email"><?PHP echo  $_SESSION['email']; ?> </span>
+                                                      <?PHP
+                                                        } 
+                                                        }
+                                                        ?> 
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -236,17 +263,9 @@ $commandes=$commande1C->recupererhistorique();
                                                     <a href="#">
                                                         <i class="zmdi zmdi-account"></i>Compte</a>
                                                 </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Paramétres</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
-                                                </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                  <a href="logout.php">
                                                     <i class="zmdi zmdi-power"></i>Deconexion</a>
                                             </div>
                                         </div>
@@ -255,45 +274,66 @@ $commandes=$commande1C->recupererhistorique();
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div></div> 
             </header>
             <!-- END HEADER DESKTOP-->
-
-            
-                                <!--  Data table-->
-                            <br><br><br><br>
-                      
- 
-
-
-
+<br> <br> <br> 
+             <?PHP
+include "../core/clientC.php";
+            //  if (isset($_GET['nom']))
+            //   {
+$client1C=new clientC();
+$liste=$client1C->afficher();	
+                ?> 
 <table class="table table-bordered table-striped mb-none"  id="myTable2" data-swf-path="assets/vendor/jquery-datatables/extras/TableTools/swf/copy_csv_xls_pdf.swf">
 							<thead>
 								<tr>
-													<th style="color:rgb(44, 172, 171)">ID client</th>
-													<th style="color:rgb(44, 172, 171)">ID commande</th>
+													<th style="color:rgb(44, 172, 171)">id</th>
+													<th style="color:rgb(44, 172, 171)">nom</th>
+													<th style="color:rgb(44, 172, 171)">email</th>
+													<th style="color:rgb(44, 172, 171)">etat</th>
 													<th style="color:rgb(44, 172, 171)">Date</th>
-													<th style="color:rgb(44, 172, 171)">Montant</th>
-													<th style="color:rgb(44, 172, 171)">Etat</th>
 													<th style="color:rgb(44, 172, 171)">Adresse</th>
-												</tr>
-												<?PHP
-foreach($commandes as $row)
-{
-  ?>
-  <tr>
-  <td><?PHP echo $row['idClient']; ?></td>
-  <td><?PHP echo $row['idCommande']; ?></td>
-  <td><?PHP echo $row['dateCommande']; ?></td>
-  <td><?PHP echo $row['montantCommande']." TND" ; ?></td>
-  <td><?PHP echo $row['etatCommande']; ?></td>
-  <td><?PHP echo $row['lieuLivraison']; ?></td>
+				        							<th style="color:rgb(44, 172, 171)">Sexe</th>
+					        							<th style="color:rgb(44, 172, 171)">num</th>
 
-</tr>
-  
-  <?PHP
-}
-?>
+													
+												</tr>
+												 <?php foreach ($liste as $row)
+                                     {
+                                    ?>
+									
+                                    <tr>
+
+                                        <td><?php echo $row["id"] ; ?></td>
+                                        <td><?php echo $row["nom"] ; ?> </td>
+
+
+                                        <td><?php echo $row["email"] ; ?></td>
+                                        <td><?php echo $row["etat"]; ?></td>
+                                        
+                                        <td><?php echo $row["datee"] ; ?></td>
+                                        <td><?php echo $row["adresse"] ; ?></td>
+                                        <td><?php echo $row["sexe"] ; ?></td>
+            
+                                        <td><?php echo $row["num"] ; ?></td>
+
+										
+											<td>   
+										  <div class="table-data-feature">
+      
+                                                </div>  </td>	
+            
+
+										  
+										  </tr>
+                                        
+
+    
+							   
+									
+                                    <?php } 
+                                ?>
 </thead>
 
 
@@ -301,19 +341,32 @@ foreach($commandes as $row)
 
 
 
-										</tr>
-									</tbody>
-								</table>
-					
+									
+									
+									
+									
+									
+					</table> 
+               	
+									
+                                   
+								
+								
+								
+												  
+												  
+												 
+												  
+												  												  
 
-  <!-- <script> 
+<!-- <script> 
 function myFunction() {
   alert("Votre Produit a été ajouté !");
   window.location="/Gestions%20des%20produits.html";
   
 }
 </script> -->
-
+    
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
@@ -342,6 +395,3 @@ function myFunction() {
 
 </html>
 <!-- end document-->
-<?php
-  }
-?>
